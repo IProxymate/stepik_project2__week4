@@ -30,7 +30,6 @@ class VacancyCatView(View):
     def get(self, request, category_name):
         category_name = get_object_or_404(Specialty, code=category_name)
         vacancies = Vacancy.objects.filter(specialty=category_name)
-        print(len(vacancies))
         return render(request, 'vacancies.html', context={'category': category_name, 'vacancies': vacancies})
 
 
@@ -38,12 +37,10 @@ class CompanyView(View):
     def get(self, request, id):
         company = get_object_or_404(Company, pk=id)
         vacancies = Vacancy.objects.filter(company=company)
-        print(vacancies)
         return render(request, 'company.html', context={'vacancies': vacancies, 'company': company})
 
 
 class VacancyInfoView(View):
     def get(self, request, id):
         vacancy = get_object_or_404(Vacancy, pk=id)
-        print(vacancy)
         return render(request, 'vacancy.html', context={'vacancy': vacancy})
