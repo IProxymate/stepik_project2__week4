@@ -15,7 +15,7 @@
             <section class="pl-3">
                 {% if vacancy.company.logo %}
                     <a href="{% url 'company_page' vacancy.company.pk %}">
-                    <img src="{{ vacancy.company.logo }}" width="130" height="80" alt="">
+                    <img src="{{ vacancy.company.logo.url }}" width="130" height="80" alt="">
                     </a>
                 {% endif %}
                 <div class="d-flex align-items-baseline align-content-baseline">
@@ -31,22 +31,29 @@
                 <p>На данный момент описание отсутствует</p>
             {% endif %}
 
-                <form action="/echo" class="card mt-4 mb-3">
+                <form action="#" class="card mt-4 mb-3" method="post">
+                    {% csrf_token %}
+
                     <div class="card-body mx-3">
                         <p class="h5 mt-3 font-weight-normal">Отозваться на вакансию</p>
                         <div class="form-group">
                             <label class="mb-1 mt-2" for="userName">Вас зовут</label>
-                            <input class="form-control" type="text" placeholder="" id="userName">
+                            <input class="form-control" name="written_username" type="text" placeholder="" id="userName">
                         </div>
                         <div class="form-group">
                             <label class="mb-1" for="userPhone">Ваш телефон</label>
-                            <input class="form-control" type="tel" placeholder="" id="userPhone">
+                            <input class="form-control" name="written_phone" type="tel" placeholder="" id="userPhone">
                         </div>
                         <div class="form-group">
                             <label class="mb-1" for="userMsg">Сопроводительное письмо</label>
-                            <textarea class="form-control" rows="8" id="userMsg"></textarea>
+                            <textarea class="form-control" name="written_cover_letter" rows="8" id="userMsg"></textarea>
                         </div>
-                        <input type="submit" class="btn btn-primary mt-4 mb-2" value="Записаться на пробный урок">
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                            {{ form.errors.written_username }}
+                            </div>
+                        {% endif %}
+                        <input type="submit" class="btn btn-primary mt-4 mb-2" value="Отозваться на вакансию">
                     </div>
                 </form>
             </section>
