@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+
+
+{% block title %}
+{% endblock %}
+
+
+{% block content %}
+    <main class="container mt-3 pb-5">
+        <div class="row mt-5">
+            {% include 'my_company/my_company_left_side.html' %}
+            <div class="col-12 col-lg-8">
+                <div class="card">
+                    <div class="card-body px-4 pb-4 tab-content">
+                        <!-- Tab -->
+                        <section>
+                            <h2 class="h4 pt-2 pb-3">Создайте новую вакансию</h2>
+                            <form action="{% url 'my_company_vacancy_create' %}" method="post">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group pb-2">
+                                            <label class="mb-2 text-dark" for="vacancyTitle">Название
+                                                вакансии</label>
+                                            <input class="form-control" name="title" type="text" value=""
+                                                   id="vacancyTitle">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group pb-2">
+                                            <label class="mb-2 text-dark"
+                                                   for="userSpecialization">Специализация</label>
+                                            <select class="custom-select mr-sm-2" name="specialty"
+                                                    id="userSpecialization">
+                                                {% for specialty in specialties %}
+                                                    <option value="{{ specialty.id }}">{{ specialty.title }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group pb-2">
+                                            <label class="mb-2 text-dark" for="vacancySalaryMin">Зарплата от</label>
+                                            <input class="form-control" name="salary_min" type="text" value=""
+                                                   id="vacancySalaryMin">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        <div class="form-group pb-2">
+                                            <label class="mb-2" for="vacancySalaryMax">Зарплата до</label>
+                                            <input class="form-control" name="salary_max" type="text" value=""
+                                                   id="vacancySalaryMax">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group pb-2">
+                                    <label class="mb-2 text-dark" for="vacancySkills">Требуемые навыки</label>
+                                    <textarea class="form-control" rows="3" name="skills" id="vacancySkills"
+                                              style="color:#000;"></textarea>
+                                </div>
+                                <div class="form-group pb-2">
+                                    <label class="mb-2 text-dark" for="vacancyDescription">Описание вакансии</label>
+                                    <textarea class="form-control" rows="13" name="description"
+                                              id="vacancyDescription"
+                                              style="color:#000;"></textarea>
+                                </div>
+                                {% if form.errors %}
+                                    <div class="text-danger small">{{ form.errors }}</div>
+                                {% endif %}
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-info" value="Сохранить">
+                                </div>
+                            </form>
+                        </section>
+                        <!-- END Tab -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
